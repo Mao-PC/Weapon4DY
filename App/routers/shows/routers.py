@@ -1,12 +1,15 @@
 from flask import Blueprint
+from App.models import *
 
-from App.models import db
+from App.ext import db
 
 mao_test = Blueprint('mao_test', __name__)
+
 
 @mao_test.route('/')
 def index():
     return 'mao_test TEST'
+
 
 @mao_test.route('/createDB')
 def create_db():
