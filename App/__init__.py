@@ -1,15 +1,15 @@
 from flask import Flask
 
+from App.cfg import env
 from App.ext import init_model
 from App.routers import mao_test
 
 
-def create_app():
+def create_app(cenv):
     app = Flask(__name__)
     # 注册路由
     app.register_blueprint(mao_test)
     # 注册model
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123456@192.168.9.154:33306/weapon'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config.from_object(env[cenv])
     init_model(app)
     return app
