@@ -1,32 +1,38 @@
-from flask import Blueprint
-from App.models import User
+from flask import Blueprint, request, session
 
 from App.ext import db
+from App.models import User
 
-mao_test = Blueprint('mao_test', __name__)
+shows = Blueprint('mao_test', __name__)
 
 
-@mao_test.route('/')
+@shows.route('/ip')
 def index():
-    return 'mao_test TEST'
+    return request.remote_addr
 
 
-@mao_test.route('/createDB')
+@shows.route('/createDB')
 def create_db():
     db.create_all()
     return '创建成功'
 
 
-@mao_test.route('/dropDB')
+@shows.route('/dropDB')
 def drop_all():
     db.drop_all()
     return '删库成功'
 
 
-@mao_test.route('/addUser')
+@shows.route('/addUser')
 def add_user():
     user = User()
     user.username = 'TTT'
     db.session.add(user)
     db.session.commit()
     return '用户添加成功'
+
+
+@shows.route('/addse')
+def add_se():
+    session['name'] = 'mao'
+    return 'o的k'
